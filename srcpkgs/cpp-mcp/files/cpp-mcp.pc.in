@@ -1,0 +1,11 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include/mcp
+
+Name: cpp-mcp
+Description: C++ implementation of Model Context Protocol (MCP)
+Version: @VERSION@
+Libs: -L${libdir} -lmcp -lpthread
+Cflags: -I${includedir}
+Requires: openssl 

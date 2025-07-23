@@ -1,0 +1,32 @@
+# Template file for 'cpp-mcp'
+pkgname=cpp-mcp
+version=0.0a
+revision=1
+build_style=cmake
+configure_args="-DMCP_SSL=ON"
+hostmakedepends="cmake"
+makedepends="openssl-devel"
+short_desc="C++ implementation of Model Context Protocol (MCP)"
+maintainer="K_log Televised <klog.website.notdotcom@gmail.com>"
+license="MIT"
+homepage="https://github.com/klogdotwebsitenotdotcom/cpp-mcp"
+distfiles="https://github.com/klogdotwebsitenotdotcom/cpp-mcp/archive/refs/heads/distribution.tar.gz"
+checksum=638c91845d1dd787580701607167adc0d06be9317f6705fc3331b30e3dca2f97
+
+post_install() {
+	vlicense LICENSE
+	vdoc README.md
+}
+
+do_install() {
+	vinstall build/src/libmcp.a 644 usr/lib
+	vmkdir usr/include/mcp
+	vcopy "include/*.h" usr/include/mcp
+	vcopy "common/*.h*" usr/include/mcp
+
+	vmkdir usr/lib/pkgconfig
+	sed -e "s|@VERSION@|${version}|g" \
+		${FILESDIR}/cpp-mcp.pc.in > cpp-mcp.pc
+	vinstall cpp-mcp.pc 644 usr/lib/pkgconfig
+}
+
